@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Negative Peer Pressure Interactive Zone</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#eef6ff;color:#17324d}
+header{background:#2563eb;color:white;text-align:center;padding:28px 16px}
+main{max-width:850px;margin:20px auto;padding:0 14px}
+.card{background:white;border-radius:18px;padding:22px;margin:18px 0;box-shadow:0 5px 18px #0001}
+h2{color:#1d4ed8}
+button{border:0;border-radius:12px;padding:12px 18px;margin:6px;cursor:pointer;font-size:16px;background:#2563eb;color:white}
+button:hover{opacity:.9}
+.option{display:block;width:100%;text-align:left;background:#f1f5f9;color:#17324d;border:2px solid #cbd5e1}
+.option:hover{background:#dbeafe}
+.feedback{font-weight:bold;margin:12px 0;min-height:24px}
+.score{font-size:20px;font-weight:bold}
+input{padding:12px;border:2px solid #cbd5e1;border-radius:10px;font-size:16px}
+.hidden{display:none}
+.badge{display:inline-block;background:#dbeafe;color:#1e40af;padding:6px 10px;border-radius:20px;margin:3px}
+footer{text-align:center;padding:25px;color:#52677a}
+</style>
+</head>
+<body>
+<header>
+<h1>🎮 Negative Peer Pressure Interactive Zone</h1>
+<p>Learn • Decide • Respond • Build a more inclusive school community</p>
+</header>
+
+<main>
+
+<div class="card">
+<h2>📚 What is Negative Peer Pressure?</h2>
+<p>Negative peer pressure happens when people feel pushed by friends or a group to do something harmful, uncomfortable, or against their values. You have the right to make your own choices and treat others with respect.</p>
+<span class="badge">Respect</span><span class="badge">Courage</span><span class="badge">Inclusion</span><span class="badge">Good choices</span>
+</div>
+
+<div class="card">
+<h2>🎯 Game 1: What Would You Do?</h2>
+<p id="g1q"></p>
+<div id="g1options"></div>
+<p class="feedback" id="g1feedback"></p>
+<button onclick="nextG1()">Next ➡️</button>
+<p class="score" id="g1score"></p>
+</div>
+
+<div class="card">
+<h2>🚦 Game 2: Green Light or Red Light?</h2>
+<p id="g2q"></p>
+<button onclick="g2answer('green')">🟢 GREEN — Healthy</button>
+<button onclick="g2answer('red')">🔴 RED — Harmful</button>
+<p class="feedback" id="g2feedback"></p>
+<button onclick="nextG2()">Next ➡️</button>
+<p class="score" id="g2score"></p>
+</div>
+
+<div class="card">
+<h2>💬 Game 3: Build Your Response</h2>
+<p id="g3q"></p>
+<div id="g3options"></div>
+<p class="feedback" id="g3feedback"></p>
+<button onclick="nextG3()">Next ➡️</button>
+<p class="score" id="g3score"></p>
+</div>
+
+<div class="card">
+<h2>🔤 Game 4: Word Scramble</h2>
+<p>Unscramble the letters to find a word connected to positive choices.</p>
+<h2 id="scramble"></h2>
+<input id="word" placeholder="Type your answer">
+<button onclick="checkWord()">Check Answer</button>
+<button onclick="nextWord()">Next Word ➡️</button>
+<p class="feedback" id="wordFeedback"></p>
+<p class="score" id="wordScore"></p>
+</div>
+
+<div class="card">
+<h2>🏆 Game 5: Final Challenge</h2>
+<p id="g5q"></p>
+<div id="g5options"></div>
+<p class="feedback" id="g5feedback"></p>
+<button onclick="nextG5()">Next ➡️</button>
+<p class="score" id="g5score"></p>
+</div>
+
+<div class="card">
+<h2>🌟 Your Message</h2>
+<p>Being inclusive means making others feel respected, welcomed and safe. If peer pressure makes you uncomfortable, you can say no, walk away, support a friend, and talk to a trusted adult.</p>
+</div>
+
+</main>
+<footer>Made for learning about negative peer pressure and social cohesion 💙</footer>
+
+<script>
+const g1=[
+["Your friends want you to leave a school activity without permission.","Say no and stay at the activity.","Go with them so they don't get upset.","Tell them rules don't matter.",0],
+["A group is making fun of a student and wants you to join.","Refuse and support the student.","Join in so you fit in.","Record it and share it.",0],
+["Friends pressure you to do something that makes you uncomfortable.","Say no and choose what feels right.","Do it because everyone else is doing it.","Stay quiet and follow them.",0],
+["A friend says everyone must exclude a new student.","Invite the new student to join the group.","Agree so you can fit in.","Ignore the student.",0]
+];
+let i1=0,s1=0;
+function showG1(){let x=g1[i1];g1q.textContent=x[0];g1options.innerHTML="";x.slice(1,4).forEach((o,j)=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{if(j===x[4]){s1++;g1feedback.textContent="✅ Great choice!";}else g1feedback.textContent="❌ Think about safety, respect and your own values.";g1score.textContent=`Score: ${s1}/${i1+1}`;};g1options.appendChild(b)});}
+function nextG1(){i1=(i1+1)%g1.length;g1feedback.textContent="";showG1();} showG1();
+
+const g2=[
+["A friend encourages you to study together before a test.","green"],
+["Friends pressure someone to break a school rule.","red"],
+["A classmate invites a lonely student into a group activity.","green"],
+["A group says you must insult someone to be accepted.","red"]
+];let i2=0,s2=0;
+function showG2(){g2q.textContent=g2[i2][0];}
+function g2answer(a){if(a===g2[i2][1]){s2++;g2feedback.textContent="✅ Correct!";}else g2feedback.textContent="❌ Not quite. Think about whether the influence is respectful and helpful.";g2score.textContent=`Score: ${s2}/${i2+1}`;}
+function nextG2(){i2=(i2+1)%g2.length;g2feedback.textContent="";showG2();}showG2();
+
+const g3=[
+["Someone says: “Come on, everyone is doing it!”","No thanks. I have made my choice.","Okay, I'll do it too.","I have to prove I'm brave.",0],
+["The pressure continues after you say no.","Walk away and talk to a trusted adult.","Argue until they agree with you.","Do what they want.",0],
+["A friend is being pressured by a group.","Support them and encourage them to seek help.","Laugh at them.","Tell them they must join the group.",0]
+];let i3=0,s3=0;
+function showG3(){let x=g3[i3];g3q.textContent=x[0];g3options.innerHTML="";x.slice(1,4).forEach((o,j)=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{if(j===x[4]){s3++;g3feedback.textContent="✅ Strong response!";}else g3feedback.textContent="❌ Try choosing a response that protects your boundaries and respects others.";g3score.textContent=`Score: ${s3}/${i3+1}`;};g3options.appendChild(b)});}
+function nextG3(){i3=(i3+1)%g3.length;g3feedback.textContent="";showG3();}showG3();
+
+const words=["RESPECT","CHOICE","COURAGE","INCLUDE","BOUNDARY"];let iw=0,sw=0;
+function scrambleWord(w){let a=w.split("");for(let k=a.length-1;k>0;k--){let r=Math.floor(Math.random()*(k+1));[a[k],a[r]]=[a[r],a[k]];}let s=a.join("");return s===w?scrambleWord(w):s;}
+function showWord(){scramble.textContent=scrambleWord(words[iw]);word.value="";wordFeedback.textContent="";}
+function checkWord(){if(word.value.trim().toUpperCase()===words[iw]){sw++;wordFeedback.textContent="✅ Correct!";}else wordFeedback.textContent="❌ Try again!";wordScore.textContent=`Score: ${sw}/${iw+1}`;}
+function nextWord(){iw=(iw+1)%words.length;showWord();}showWord();
+
+const g5=[
+["Someone asks you to bully another student.","Say no and support the student.","Join them.","Ignore it.",0],
+["Friends pressure you to skip class.","Say no and attend class.","Skip class with them.","Tell everyone to skip.",0],
+["A student is being excluded from a group activity.","Invite them to participate.","Tell them to leave.","Ignore them.",0],
+["You feel unsafe because of peer pressure.","Leave the situation and tell a trusted adult.","Stay because you want to fit in.","Keep it secret.",0]
+];let i5=0,s5=0;
+function showG5(){let x=g5[i5];g5q.textContent=x[0];g5options.innerHTML="";x.slice(1,4).forEach((o,j)=>{let b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=()=>{if(j===x[4]){s5++;g5feedback.textContent="✅ Correct!";}else g5feedback.textContent="❌ Think about respect, safety and inclusion.";g5score.textContent=`Score: ${s5}/${i5+1}`;};g5options.appendChild(b)});}
+function nextG5(){i5=(i5+1)%g5.length;g5feedback.textContent="";showG5();}showG5();
+</script>
+</body>
+</html>
